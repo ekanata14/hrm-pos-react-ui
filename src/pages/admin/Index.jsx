@@ -11,6 +11,7 @@ const Index = () => {
   const [categories, setCategories] = useState([]);
   const [cart, setCart] = useState([]);
   const [profile, setProfile] = useState([]);
+  const [total, setTotal] = useState(0);
   const navigate = useNavigate();
   let idCart = 0;
   let i = 1;
@@ -69,6 +70,17 @@ const handleChange = (e) => {
       .get(`${apiUrl}/items`)
       .then((response) => {
         setData(response.data);
+      })
+      .catch((error) => {
+        alert("Error fetching data", error);
+      });
+  };
+  
+  const getTotalBazzar = () => {
+    axios
+      .get(`${apiUrl}/total`)
+      .then((response) => {
+        setTotal(response.data);
       })
       .catch((error) => {
         alert("Error fetching data", error);
@@ -135,9 +147,26 @@ const handleChange = (e) => {
     getItems();
     getCategories();
     getProfile();
+    getTotalBazzar();
   }, []);
+  const isAdmin = profile.id_role;
+  let card = '';
+  if(isAdmin == 1){
+    card = 
+      <div>
+        <div className="card w-full mb-6 bg-white text-black shadow-xl">
+  <div className="card-body text-center">
+    <h2 className="font-bold text-center text-2xl">Total Kas Bazzar</h2>
+    <p className="font-semibold">{total.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDiigits: 0})}</p>
+  </div>
+</div>
+      </div>
+  } else{
+    card = ''
+  }
   return (
     <AdminLayout>
+      {card}
       <div className="grid grid-cols-4 gap-2">
         {categories.length > 0 ? (
           categories.map((item) => (
@@ -171,7 +200,7 @@ const handleChange = (e) => {
       </div>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
-        className="btn btn-primary absolute right-5 bottom-5"
+        className="btn btn-warning absolute right-5 bottom-5"
         onClick={() => {
           document.getElementById("my_modal_1").showModal();
           getItemsByCart(profile.id_user);

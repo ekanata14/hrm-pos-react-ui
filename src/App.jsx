@@ -8,6 +8,10 @@ import './index.css'
 import Leaderboard from './pages/admin/Leaderboard'
 import Profile from './pages/admin/Profile'
 import ChangePassword from './pages/admin/ChangePassword'
+import Items from './pages/admin/Items'
+import ItemsBySupplier from './pages/admin/ItemsBySupplier'
+import AddItem from './pages/admin/AddItem'
+import AddSupplier from './pages/admin/AddSupplier'
 
 function App() {
   return (
@@ -21,6 +25,10 @@ function App() {
           <Route path='/leaderboard' Component={Leaderboard} />
           <Route path='/profile' Component={Profile} />
           <Route path='/changePassword' Component={ChangePassword} />
+          <Route path='/items' Component={Items} />
+          <Route path='/items/:id' Component={ItemsBySupplier} />
+          <Route path='/addItem' Component={AddItem} />
+          <Route path='/addSupplier' Component={AddSupplier} />
         </Routes>
       </Router>
     </>

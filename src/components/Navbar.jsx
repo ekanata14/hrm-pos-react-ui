@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logoHRM from "../assets/logo_hrm.png"; 
 import axios from 'axios';
 import apiUrl from '../api/apiConfig';
 import { useNavigate, Link } from "react-router-dom";
-
 const Navbar = () => {
     const navigate = useNavigate();
+    const navButton = '';
+  const checkAuth = () => {
+    // Retrieve token from local storage
+    const token = localStorage.getItem("token");
+
+    // Check if token exists
+    if (token) {
+      // Set token as default header for all Axios requests
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      navigate("/");
+    }
+  };
+  const [profile, setProfile] = useState([]);
     const logout = (e) => {
         e.preventDefault()
         axios.get(`${apiUrl}/logout`).then(response => {
@@ -15,6 +28,24 @@ const Navbar = () => {
             console.error("Error logout", error);
         })
     }
+const getProfile = () => {
+    axios
+      .get(`${apiUrl}/me`)
+      .then((response) => {
+        setProfile(response.data);
+      })
+      .catch((error) => {
+        alert("Error get profile", error);
+      });
+  };
+
+  useEffect(() => {
+    checkAuth();
+    getProfile();
+  }, []);
+
+  const isAdmin = profile.id_role;
+
   return (
     <div className="fixed navbar bg-base-100 z-10">
   <div className="navbar-start">
@@ -24,19 +55,26 @@ const Navbar = () => {
       </div>
       <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
       <Link to={'/dashboard'}>
-        <li>
+        <li className='p-2 border-b-2'>
           Dashboard
         </li>
       </Link>
       <Link to={'/profile'}>
-        <li>Profile</li>
+        <li className='p-2 border-b-2'>Profile</li>
       </Link>
       <Link to={'/history'}>
-        <li>History</li>
+        <li className='p-2 border-b-2'>History</li>
       </Link>
       <Link to={'/leaderboard'}>
-        <li>Leaderboard</li>
+        <li className='p-2 border-b-2'>Leaderboard</li>
       </Link>
+      {isAdmin === 1 && (
+        <React.Fragment>
+      <Link to={'/items'}>
+        <li className='p-2 border-b-2'>Items</li>
+      </Link>
+        </React.Fragment>
+      )}
       </ul>
     </div>
   </div>
