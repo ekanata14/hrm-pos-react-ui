@@ -3,6 +3,7 @@ import logoHRM from "../assets/logo_hrm.png";
 import axios from 'axios';
 import apiUrl from '../api/apiConfig';
 import { useNavigate, Link } from "react-router-dom";
+
 const Navbar = () => {
     const navigate = useNavigate();
     const navButton = '';
@@ -35,7 +36,7 @@ const getProfile = () => {
         setProfile(response.data);
       })
       .catch((error) => {
-        alert("Error get profile", error);
+        console.error("Error get profile", error);
       });
   };
 
@@ -68,7 +69,7 @@ const getProfile = () => {
       <Link to={'/leaderboard'}>
         <li className='p-2 border-b-2'>Leaderboard</li>
       </Link>
-      {isAdmin === 1 && (
+      {isAdmin == 1 && (
         <React.Fragment>
       <Link to={'/items'}>
         <li className='p-2 border-b-2'>Items</li>

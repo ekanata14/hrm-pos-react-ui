@@ -16,19 +16,6 @@ const Profile = () => {
     password: "",
     id_role: 0,
   });
-  
-  const checkAuth = () => {
-    // Retrieve token from local storage
-    const token = localStorage.getItem("token");
-
-    // Check if token exists
-    if (token) {
-      // Set token as default header for all Axios requests
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      navigate("/");
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +43,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    checkAuth();
     getProfile();
   }, []);
   return (

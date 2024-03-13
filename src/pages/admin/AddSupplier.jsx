@@ -12,9 +12,6 @@ const AddSupplier = () => {
   });
   const [error, setError] = useState("");
 
-  useEffect(() => {
-  }, []);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

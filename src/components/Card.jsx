@@ -61,10 +61,10 @@ const formattedDate = `${year}-${month}-${day}`;
     }
   };
   return (
-    <div className="card w-37 bg-slate-700 shadow-xl text-white" key={id}>
+    <div className="card w-37 bg-late-700 shadow-xl text-white" key={id}>
       <div className="card-body flex justify-center text-center">
         <h2 className="text-2xl font-bold">{title}</h2>
-        <p className="text-md">{price.toLocaleString('id-ID', {style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDiigits: 0})}</p>
+        <p className="text-md">{parseInt(price).toLocaleString('id-ID', {style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0})}</p>
         <div className="card-actions justify-center">
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <input type="hidden" value={id} name="id_item" onChange={handleChange}/>

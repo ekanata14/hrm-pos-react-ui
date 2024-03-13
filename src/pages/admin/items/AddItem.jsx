@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import AdminLayout from "../../layouts/AdminLayout";
-import apiUrl from "../../api/apiConfig";
+import AdminLayout from "../../../layouts/AdminLayout";
+import apiUrl from "../../../api/apiConfig";
 
 const AddItem = () => {
     const navigate = useNavigate()

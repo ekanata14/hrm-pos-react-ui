@@ -25,10 +25,13 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData);
       const response = await axios.post(`${apiUrl}/register`, formData);
       // Redirect to dashboard or another page
+      console.log(response);
       navigate("/");
     } catch (error) {
+      console.error(error);
       setError("Invalid input");
     }
   };

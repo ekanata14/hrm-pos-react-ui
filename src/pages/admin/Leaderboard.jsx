@@ -7,18 +7,6 @@ import AdminLayout from "../../layouts/AdminLayout";
 const Leaderboard = () => { 
     const [data, setData] = useState([]);
     let i = 1;
-  const checkAuth = () => {
-    // Retrieve token from local storage
-    const token = localStorage.getItem("token");
-
-    // Check if token exists
-    if (token) {
-      // Set token as default header for all Axios requests
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      navigate("/");
-    }
-  };
 
   const getLeaderboard = async() => { 
     await axios
@@ -28,7 +16,6 @@ const Leaderboard = () => {
   }
 
   useEffect(() => {
-    checkAuth();
     getLeaderboard();
   }, []);
   return (

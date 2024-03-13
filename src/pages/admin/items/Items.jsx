@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AdminLayout from "../../layouts/AdminLayout";
+import AdminLayout from "../../../layouts/AdminLayout.jsx";
 import axios from "axios";
-import apiUrl from "../../api/apiConfig.js";
+import apiUrl from "../../../api/apiConfig.js";
 import { Link } from "react-router-dom";
 
 const Items = () => {

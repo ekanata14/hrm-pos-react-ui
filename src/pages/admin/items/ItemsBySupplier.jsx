@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AdminLayout from "../../layouts/AdminLayout.jsx";
+import AdminLayout from "../../../layouts/AdminLayout.jsx";
 import axios from "axios";
-import apiUrl from "../../api/apiConfig.js";
+import apiUrl from "../../../api/apiConfig.js";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -62,11 +62,6 @@ const Items = () => {
   }, []);
   return (
     <AdminLayout>
-      <div className="flex justify-center">
-        <Link to={`/addItem`}>
-          <button className="btn btn-primary">Add Item</button>
-        </Link>
-      </div>
       <div className="overflow-x-auto p-1">
         <table className="table">
           {/* head */}
@@ -114,9 +109,12 @@ const Items = () => {
           </tbody>
         </table>
       </div>
+        <Link to={`/addItem`}>
+          <button className="btn btn-primary w-full mt-5">Add Item</button>
+        </Link>
       {/* Open the modal using document.getElementById('ID').showModal() method */}
       <button
-        className="btn btn-info w-full mt-5"
+        className="btn btn-info w-full mt-3"
         onClick={() => {
           document.getElementById("my_modal_1").showModal();
         }}

@@ -9,18 +9,6 @@ const History = () => {
     const [profile, setProfile] = useState([]);
     let i = 1;
     let totalItem, totalCart = 0;
-  const checkAuth = () => {
-    // Retrieve token from local storage
-    const token = localStorage.getItem("token");
-
-    // Check if token exists
-    if (token) {
-      // Set token as default header for all Axios requests
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      navigate("/");
-    }
-  };
   
   const getProfile = () => {
     axios
@@ -41,7 +29,6 @@ const History = () => {
   }
 
   useEffect(() => {
-    checkAuth();
     getTodayItem();
     getProfile();
   }, []);
@@ -63,6 +50,7 @@ const History = () => {
     </thead>
     <tbody>
     {data.map(item => (
+      item.total_item_out != 0 && (
       <tr key={item.id_item}>
         <th>{i++}</th>
         <td>{item.name_item}</td>
@@ -73,7 +61,8 @@ const History = () => {
                 <td className="hidden">
                 {totalCart += totalItem}</td>
       </tr>
-    ))}
+      )
+      ))}
     </tbody>
   </table>
   <div className="flex flex-col items-end px-6">
