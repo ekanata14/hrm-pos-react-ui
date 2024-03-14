@@ -61,7 +61,7 @@ const formattedDate = `${year}-${month}-${day}`;
     }
   };
   return (
-    <div className="card w-37 bg-late-700 shadow-xl text-white" key={id}>
+    <div className="card w-37 bg-primary shadow-xl text-white" key={id}>
       <div className="card-body flex justify-center text-center">
         <h2 className="text-2xl font-bold">{title}</h2>
         <p className="text-md">{parseInt(price).toLocaleString('id-ID', {style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0})}</p>

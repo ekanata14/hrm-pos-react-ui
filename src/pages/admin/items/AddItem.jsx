@@ -51,7 +51,7 @@ const AddItem = () => {
       const response = await axios.post(`${apiUrl}/items`, formData);
       console.log("Item added successfully:", response.data);
       // Redirect to dashboard or another page
-      navigate(`/items`);
+      navigate(`/items/${formData.id_supplier}`);
     } catch (error) {
       console.error("Error adding item:", error);
       setError("Failed to add item");

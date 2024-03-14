@@ -188,7 +188,7 @@ const Index = () => {
   if (isAdmin == 1) {
     card = (
       <div>
-        <div className="card w-full mb-6 bg-white text-black shadow-xl">
+        <div className="card w-full mb-6 bg-secondary text-black shadow-xl">
           <div className="card-body text-center">
             <h2 className="font-bold text-center text-2xl">Total Kas Bazzar</h2>
             <p className="font-semibold">
@@ -210,7 +210,7 @@ const Index = () => {
     <AdminLayout>
       {card}
       <div>
-        <div className="card w-full mb-6 bg-white text-black shadow-xl">
+        <div className="card w-full mb-6 bg-secondary text-black shadow-xl">
           <div className="card-body text-center">
             <h2 className="font-bold text-center text-2xl">
               Total Bazzar Harian
