@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 const Items = () => {
   const [data, setData] = useState([]);
+  const [supplier, setSupplier] = useState([]);
   const { id } = useParams();
   let i = 1;
   const currentDate = new Date(Date.now());
@@ -26,7 +27,7 @@ const Items = () => {
     item_date: formattedDate,
   });
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   const handleSubmit = async (e) => {
@@ -46,6 +47,17 @@ const Items = () => {
     }
   };
 
+  const getSupplierById = () => {
+    axios
+      .get(`${apiUrl}/supplier/${id}`)
+      .then((response) => {
+        setSupplier(response.data.supplier)
+      })
+      .catch((error) => {
+        alert("Error fetching data", error);
+      });
+  };
+
   const getItemsBySupplier = () => {
     axios
       .get(`${apiUrl}/itemsSup/${id}`)
@@ -59,11 +71,19 @@ const Items = () => {
 
   useEffect(() => {
     getItemsBySupplier();
+    getSupplierById();
   }, []);
   return (
     <AdminLayout>
+      <h1 className="text-2xl font-bold text-center">{supplier.name_supplier}'s Items</h1>
+      <Link to={`/addItem/${id}`}>
+        <button className="btn btn-primary w-full mt-5">Add Item</button>
+      </Link>
+      <Link to={`/items`}>
+        <button className="btn btn-info w-full mt-5">Back</button>
+      </Link>
       <div className="overflow-x-auto p-1">
-        <table className="table">
+        <table className="table table-xs">
           {/* head */}
           <thead>
             <tr>
@@ -72,6 +92,7 @@ const Items = () => {
               <th>Base Price</th>
               <th>Sell Price</th>
               <th>Stock</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -81,7 +102,7 @@ const Items = () => {
                   <th>{i++}</th>
                   <td>{item.name_item}</td>
                   <td>
-                    {item.base_price_item.toLocaleString("id-ID", {
+                    {parseInt(item.base_price_item).toLocaleString("id-ID", {
                       style: "currency",
                       currency: "IDR",
                       minimumFractionDigits: 0,
@@ -89,7 +110,7 @@ const Items = () => {
                     })}
                   </td>
                   <td>
-                    {item.sell_price_item.toLocaleString("id-ID", {
+                    {parseInt(item.sell_price_item).toLocaleString("id-ID", {
                       style: "currency",
                       currency: "IDR",
                       minimumFractionDigits: 0,
@@ -97,6 +118,13 @@ const Items = () => {
                     })}
                   </td>
                   <td>{item.total_stock}</td>
+                  <td>
+                    <Link to={`/addStock/${item.id_item}/${id}`}>
+                      <button className="btn btn-info w-full mt-5">
+                        Stock+
+                      </button>
+                    </Link>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -109,18 +137,6 @@ const Items = () => {
           </tbody>
         </table>
       </div>
-        <Link to={`/addItem`}>
-          <button className="btn btn-primary w-full mt-5">Add Item</button>
-        </Link>
-      {/* Open the modal using document.getElementById('ID').showModal() method */}
-      <button
-        className="btn btn-info w-full mt-3"
-        onClick={() => {
-          document.getElementById("my_modal_1").showModal();
-        }}
-      >
-        Add Stock
-      </button>
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box">
           <form onSubmit={handleSubmit}>

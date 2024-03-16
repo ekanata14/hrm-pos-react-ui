@@ -12,6 +12,10 @@ import Items from "./pages/admin/items/Items";
 import ItemsBySupplier from "./pages/admin/items/ItemsBySupplier";
 import AddItem from "./pages/admin/items/AddItem";
 import AddSupplier from "./pages/admin/AddSupplier";
+import AddStock from "./pages/admin/items/AddStock";
+import Users from './pages/admin/users/Users';
+import UserEdit from './pages/admin/users/UserEdit';
+import UserAdd from "./pages/admin/users/UserAdd";
 
 function App() {
   return (
@@ -24,11 +28,16 @@ function App() {
             <Route path="/history" Component={History} />
             <Route path="/leaderboard" Component={Leaderboard} />
             <Route path="/profile" Component={Profile} />
-            <Route path="/changePassword" Component={ChangePassword} />
+            {/* Change to use id by passing the parameter */}
+            <Route path="/changePassword" Component={ChangePassword} />$ 
             <Route path="/items" Component={Items} />
             <Route path="/items/:id" Component={ItemsBySupplier} />
-            <Route path="/addItem" Component={AddItem} />
+            <Route path="/addItem/:id" Component={AddItem} />
             <Route path="/addSupplier" Component={AddSupplier} />
+            <Route path="/addStock/:idItem/:idSupplier" Component={AddStock} />
+            <Route path="/users" Component={Users} />
+            <Route path="/users/:id" Component={UserEdit} />
+            <Route path="/users/add" Component={UserAdd} />
           </Routes>
       </Router>
     </>

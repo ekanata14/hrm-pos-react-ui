@@ -1,58 +1,50 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import apiUrl from "../../api/apiConfig";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import AuthLayout from "../../../layouts/AuthLayout.jsx";
 import axios from "axios";
-import AdminLayout from "../../layouts/AdminLayout";
+import apiUrl from "../../../api/apiConfig.js";
+import logoHRM from "../../../assets/logo_hrm.png";
+import AdminLayout from "../../../layouts/AdminLayout.jsx";
 
-const Profile = () => {
-  const [profile, setProfile] = useState([]);
+const UserAdd = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    id_user: 0,
     name: "",
     username: "",
     email: "",
     address: "",
     phone_number: "",
     password: "",
-    id_role: 0,
+    id_role: 2,
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const getProfile = () => {
-    axios
-      .get(`${apiUrl}/me`)
-      .then((response) => {
-        setFormData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error get profile", error);
-      });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${apiUrl}/editUser`, formData).then(response => alert(response.data.message)).catch(error => console.error("Error edit data", error));
+      console.log(formData);
+      const response = await axios.post(`${apiUrl}/register`, formData);
+      // Redirect to dashboard or another page
+      console.log(response);
+      navigate("/");
     } catch (error) {
-      console.error("Invalid input", error);
+      console.error(error);
+      setError("Invalid input");
     }
   };
 
-  useEffect(() => {
-    getProfile();
-  }, []);
   return (
     <AdminLayout>
-      <div className="flex flex-col gap-4">
-    <h1 className="text-2xl text-center mb-6">Your Profile</h1>
-    <form
+      <form
         onSubmit={handleSubmit}
         className="flex items-center justify-center h-full flex-col gap-5"
       >
+        <img src={logoHRM} alt="logo-hrm" className="w-32" />
+        <h2 className="text-2xl font-bold">HRM POS SYSTEM</h2>
         <label className="input input-bordered flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -144,13 +136,36 @@ const Profile = () => {
             onChange={handleChange}
           />
         </label>
-        <input type="hidden" name="id_user" value={formData.id_user} />
-        <button type="submit" className="btn btn-info w-1/2 text-white">Edit</button>
-        <a href="/changePassword" className="btn btn-warning text-white">Change Password</a>
-        </form>
-      </div>
+        <label className="input input-bordered flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-4 h-4 opacity-70"
+          >
+            <path
+              fillRule="evenodd"
+              d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <input
+            type="password"
+            className="grow"
+            placeholder="********"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </label>
+        <button className="btn btn-primary w-full">REGISTER</button>
+      <Link to={'/'}>
+        <li className="btn btn-info">LOGIN</li>
+      </Link>
+        {error && <p className="text-red-500">{error}</p>}
+      </form>
     </AdminLayout>
   );
 };
 
-export default Profile;
+export default UserAdd;

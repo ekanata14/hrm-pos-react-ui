@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import apiUrl from "../../api/apiConfig";
+import apiUrl from "../../../api/apiConfig";
 import axios from "axios";
-import AdminLayout from "../../layouts/AdminLayout";
+import AdminLayout from "../../../layouts/AdminLayout";
+import { useParams } from "react-router-dom";
 
-const Profile = () => {
+const UserEdit = () => {
+  const { id } = useParams();
   const [profile, setProfile] = useState([]);
   const [formData, setFormData] = useState({
     id_user: 0,
@@ -22,11 +24,11 @@ const Profile = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const getProfile = () => {
+  const getUserById = () => {
     axios
-      .get(`${apiUrl}/me`)
+      .get(`${apiUrl}/users/${id}`)
       .then((response) => {
-        setFormData(response.data);
+        setFormData(response.data.user);
       })
       .catch((error) => {
         console.error("Error get profile", error);
@@ -43,7 +45,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    getProfile();
+    getUserById();
   }, []);
   return (
     <AdminLayout>
@@ -153,4 +155,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserEdit;

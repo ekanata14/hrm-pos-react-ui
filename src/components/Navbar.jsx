@@ -71,6 +71,9 @@ const getProfile = () => {
       </Link>
       {isAdmin == 1 && (
         <React.Fragment>
+      <Link to={'/users'}>
+        <li className='p-2 border-b-2'>Users</li>
+      </Link>
       <Link to={'/items'}>
         <li className='p-2 border-b-2'>Items</li>
       </Link>

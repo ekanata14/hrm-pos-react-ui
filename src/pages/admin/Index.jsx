@@ -66,7 +66,7 @@ const Index = () => {
 
   const getTotalBazzar = () => {
     axios
-      .get(`${apiUrl}/total`)
+      .get(`${apiUrl}/totalAll`)
       .then((response) => {
         setTotal(response.data);
       })
@@ -77,7 +77,7 @@ const Index = () => {
 
   const getTotalPerDay = () => {
     axios
-      .get(`${apiUrl}/totalPerDay`)
+      .get(`${apiUrl}/totalPerDay/${formattedDate}`)
       .then((response) => {
         setTotalPerDay(response.data);
       })
@@ -188,11 +188,11 @@ const Index = () => {
   if (isAdmin == 1) {
     card = (
       <div>
-        <div className="card w-full mb-6 bg-secondary text-black shadow-xl">
+        <div className="card w-full mb-6 bg-white text-black shadow-xl">
           <div className="card-body text-center">
             <h2 className="font-bold text-center text-2xl">Total Kas Bazzar</h2>
             <p className="font-semibold">
-              {total.toLocaleString("id-ID", {
+              {parseInt(total).toLocaleString("id-ID", {
                 style: "currency",
                 currency: "IDR",
                 minimumFractionDigits: 0,
@@ -210,7 +210,7 @@ const Index = () => {
     <AdminLayout>
       {card}
       <div>
-        <div className="card w-full mb-6 bg-secondary text-black shadow-xl">
+        <div className="card w-full mb-6 bg-white text-black shadow-xl">
           <div className="card-body text-center">
             <h2 className="font-bold text-center text-2xl">
               Total Bazzar Harian

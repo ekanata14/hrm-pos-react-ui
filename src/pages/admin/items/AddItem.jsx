@@ -3,8 +3,10 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import AdminLayout from "../../../layouts/AdminLayout";
 import apiUrl from "../../../api/apiConfig";
+import { useParams } from "react-router-dom";
 
 const AddItem = () => {
+  let {id} = useParams();
     const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name_item: "",
@@ -108,21 +110,9 @@ const AddItem = () => {
               </option>
             ))}
           </select>
-          <select
-            className="select select-bordered w-full"
-            name="id_supplier"
-            value={formData.id_supplier}
-            onChange={handleChange}
-          >
-            <option value="">Select Supplier</option>
-            {suppliers.map((supplier) => (
-              <option key={supplier.id_supplier} value={supplier.id_supplier}>
-                {supplier.name_supplier}
-              </option>
-            ))}
-          </select>
+          <input type="hidden" name="id_supplier" value={formData.id_supplier = id} />
         <button className="btn btn-primary w-full">Add Item</button>
-        <Link to={"/items"} className="w-full">
+        <Link to={`/items/${id}`} className="w-full">
           <button className="btn btn-info w-full">Cancel</button>
         </Link>
         {error && <p className="text-red-500">{error}</p>}
